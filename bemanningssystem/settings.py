@@ -4,8 +4,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'din-hemliga-nyckel'  # Byt ut till en säker nyckel i produktion
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['portal.bidma.se']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
