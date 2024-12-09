@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidma AB Admin</title>
+    <link rel="stylesheet" href="/static/core/custom.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <aside class="admin-sidebar">
+      <h2>Bidma AB</h2>
+      <a href="/admin/">Hem</a>
+      <a href="/admin_search/">Sök (Admin)</a>
+      <a href="/admin_cost_calculator/">Kostnadsräknare</a>
+      <a href="/admin_calendar/">Kalender</a>
+      <a href="/admin_contracts/">Avtal</a>
+      <a href="/admin/logout/">Logga ut</a>
+    </aside>
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <h1 style="font-size:1.5rem; margin:0;">
+          <a href="/admin/" style="color:var(--text-color);text-decoration:none;">Bidma AB Admin</a>
+        </h1>
+        <button class="cmd-button" title="Kommandopalett (Ctrl+K)">⌘K</button>
+        <div class="avatar" aria-label="Öppna profilmeny" tabindex="0">AB</div>
+      </div>
+      <div class="admin-content">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+  </div>
+
+  <div class="onboarding-overlay">
+    <div class="onboarding-box">
+      <h3>Välkommen till Bidma AB Admin</h3>
+      <p>Några snabba tips: Använd sökfunktionen, kolla kalendern, markera favoriter och anpassa filter.</p>
+      <button class="btn done-onboarding mt-3">Ok, jag förstår</button>
+    </div>
+  </div>
+
+  <script src="/static/core/custom.js"></script>
+</body>
+</html>

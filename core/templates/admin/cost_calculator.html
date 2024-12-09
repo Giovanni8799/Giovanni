@@ -1,0 +1,133 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="hero">
+  <h2 class="hero-title">Räknesnurra - Kostnadsberäkning</h2>
+  <p>Beräkna kostnader, intäkter och marginal för ett uppdrag</p>
+</div>
+
+<div class="card p-4">
+  <form method="post">
+    {% csrf_token %}
+
+    <h3 style="margin-bottom:0.5em;color:var(--text-color);">Grunddata</h3>
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.specialization.label }}</label>
+        {{ form.specialization }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.zon.label }}</label>
+        {{ form.zon }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.nurse_wage.label }}</label>
+        {{ form.nurse_wage }}
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.5em;margin-bottom:0.5em;">Arbetade timmar (Ordinarie och OB)</h3>
+    <div style="display:flex; flex-wrap:wrap; gap:20px;">
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.regular_hours.label }}</label>
+        {{ form.regular_hours }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.evening_hours.label }}</label>
+        {{ form.evening_hours }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.night_hours.label }}</label>
+        {{ form.night_hours }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.weekend_evening_hours.label }}</label>
+        {{ form.weekend_evening_hours }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.weekend_day_hours.label }}</label>
+        {{ form.weekend_day_hours }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.weekend_night_hours.label }}</label>
+        {{ form.weekend_night_hours }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.storhelg_day_hours.label }}</label>
+        {{ form.storhelg_day_hours }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.storhelg_night_hours.label }}</label>
+        {{ form.storhelg_night_hours }}
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.5em;margin-bottom:0.5em;">Jour och Beredskap</h3>
+    <p style="color:var(--light-text);font-size:0.9rem;">
+      Ej utfört arbete (lör/sön/storhelg/helgdag): Jour x0,60, Beredskap x0,30<br>
+      Ej utfört arbete (annan tid): Jour x0,30, Beredskap x0,14<br>
+      Aktiv tid: faktor x2,0
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:20px;">
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.jour_hours_weekend.label }}</label>
+        {{ form.jour_hours_weekend }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.beredskap_hours_weekend.label }}</label>
+        {{ form.beredskap_hours_weekend }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.jour_hours_weekday.label }}</label>
+        {{ form.jour_hours_weekday }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.beredskap_hours_weekday.label }}</label>
+        {{ form.beredskap_hours_weekday }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.jour_beredskap_aktiv_hours.label }}</label>
+        {{ form.jour_beredskap_aktiv_hours }}
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.5em;margin-bottom:0.5em;">Sjukdagar och Sociala avgifter</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:20px;">
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.sick_days_15_90.label }}</label>
+        {{ form.sick_days_15_90 }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.sick_days_15_45_if_under_year.label }}</label>
+        {{ form.sick_days_15_45_if_under_year }}
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label class="form-label">{{ form.social_fee_percent.label }} <small style="color:var(--light-text);">{{ form.social_fee_percent.help_text }}</small></label>
+        {{ form.social_fee_percent }}
+      </div>
+    </div>
+
+    <button type="submit" class="btn mt-3">Beräkna</button>
+  </form>
+</div>
+
+{% if result %}
+<div class="card p-4 mt-4">
+  <h3>Resultat</h3>
+  <table class="table mt-3">
+    <tbody>
+      <tr><th>Månadslön (sjuksköterska):</th><td>{{ month_salary|floatformat:2 }} SEK</td></tr>
+      <tr><th>Totala arbetade timmar:</th><td>{{ total_hours|floatformat:2 }} h</td></tr>
+      <tr><th>Bruttolön totalt:</th><td>{{ month_salary|floatformat:2 }} SEK</td></tr>
+      <tr><th>Sjuklönetillägg:</th><td>{{ sick_pay_add|floatformat:2 }} SEK</td></tr>
+      <tr><th>Tjänstepension:</th><td>{{ pension|floatformat:2 }} SEK</td></tr>
+      <tr><th>Sociala avgifter:</th><td>{{ social_fees|floatformat:2 }} SEK</td></tr>
+      <tr><th>Totala kostnader:</th><td>{{ total_cost|floatformat:2 }} SEK</td></tr>
+      <tr><th>Totala intäkter:</th><td>{{ revenue|floatformat:2 }} SEK</td></tr>
+      <tr><th>Marginal (SEK):</th><td>{{ margin|floatformat:2 }} SEK</td></tr>
+      <tr><th>Marginal (%):</th><td>{{ margin_percent|floatformat:2 }} %</td></tr>
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock content %}

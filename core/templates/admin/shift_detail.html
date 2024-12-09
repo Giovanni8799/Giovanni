@@ -1,0 +1,20 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="hero">
+  <h2 class="hero-title">Uppdrag för {{ shift.nurse.name }}</h2>
+  <p>{{ shift.region|default:"Ingen region" }} | {{ shift.hospital|default:"Inget sjukhus" }}</p>
+</div>
+
+<div class="card">
+  <p>
+    Start: {{ shift.start_time|date:"Y-m-d H:i" }}<br>
+    Slut: {{ shift.end_time|date:"Y-m-d H:i" }}<br>
+    Avdelning: {{ shift.department|default:"Ej angivet" }}<br>
+    Ansvarig chef: {{ shift.responsible_name|default:"Ej angivet" }}
+  </p>
+  <form method="post" action="/admin_shift_delete/{{ shift.id }}/">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger mt-3">Ta bort uppdrag</button>
+  </form>
+</div>
+{% endblock content %}

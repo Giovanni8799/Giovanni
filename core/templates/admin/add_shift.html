@@ -1,0 +1,83 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="hero">
+  <h2 class="hero-title">Lägg till nytt uppdrag</h2>
+  <p>Fyll i detaljer för uppdraget, såsom tid, sjukhus och avdelning</p>
+</div>
+
+<div class="card p-4">
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Filtrera sjuksköterskor</label>
+      <input type="text" id="nurseFilter" class="form-control" placeholder="Skriv för att filtrera...">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{ form.nurse.label }}</label>
+      {{ form.nurse }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.start_time.label }}</label>
+      {{ form.start_time }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.end_time.label }}</label>
+      {{ form.end_time }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.region.label }}</label>
+      {{ form.region }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.hospital.label }}</label>
+      {{ form.hospital }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.department.label }}</label>
+      {{ form.department }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.responsible_name.label }}</label>
+      {{ form.responsible_name }}
+    </div>
+
+    <button type="submit" class="btn mt-3">Spara uppdrag</button>
+  </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var filterInput = document.getElementById('nurseFilter');
+    var nurseSelect = document.getElementById('id_nurse');
+    var preselectedNurseId = "{{ preselected_nurse_id|default:'' }}";
+
+    function filterNurses() {
+        var filterValue = filterInput.value.toLowerCase();
+        for (var i = 0; i < nurseSelect.options.length; i++) {
+            var optionText = nurseSelect.options[i].text.toLowerCase();
+            if (optionText.includes(filterValue)) {
+                nurseSelect.options[i].style.display = 'block';
+            } else {
+                nurseSelect.options[i].style.display = 'none';
+            }
+        }
+    }
+
+    if (preselectedNurseId) {
+        for (var i = 0; i < nurseSelect.options.length; i++) {
+            if (nurseSelect.options[i].value === preselectedNurseId) {
+                nurseSelect.options[i].style.display = 'block';
+                nurseSelect.selectedIndex = i;
+            } else {
+                nurseSelect.options[i].style.display = 'none';
+            }
+        }
+        filterInput.value = '';
+        filterInput.disabled = true;
+    } else if (filterInput && nurseSelect) {
+        filterInput.addEventListener('input', filterNurses);
+    }
+});
+</script>
+{% endblock content %}

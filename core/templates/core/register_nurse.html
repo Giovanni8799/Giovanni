@@ -1,0 +1,62 @@
+{% extends "core/base_public.html" %}
+{% block content %}
+<h2 class="mb-4" style="text-align:center;font-size:1.8rem;">Registrera dig som sjuksköterska</h2>
+{% if error_message %}
+<div class="alert">{{ error_message }}</div>
+{% endif %}
+<form method="post" enctype="multipart/form-data" style="max-width:600px;margin:0 auto;animation:fadeInUp 0.5s ease;">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">Namn:</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Telefonnummer:</label>
+        <input type="text" name="phone" class="form-control" id="phoneField">
+        <small id="phoneFeedback" style="display:none;color:#a00;font-size:0.85rem;">Ogiltigt format</small>
+    </div>
+    <div class="mb-3" style="position:relative;">
+        <label class="form-label">E-post:</label> 
+        <span class="info-icon" data-tooltip="Ange en giltig e-postadress."></span>
+        <input type="email" name="email" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ort/Stad:</label>
+        <input type="text" name="city" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Specialisering:</label>
+        <select name="specialization" class="form-control">
+            <option value="">--Välj specialisering--</option>
+            <option value="VANLIG">Allmänsjuksköterska (Vanlig)</option>
+            <option value="ANESTESI">Anestesisjuksköterska</option>
+            <option value="BARN">Barnsjuksköterska</option>
+            <option value="BARNMORSKA">Barnmorska</option>
+            <option value="DISTRIKT">Distriktssköterska</option>
+            <option value="INTENSIV">Intensivvårdssjuksköterska</option>
+            <option value="OPERATION">Operationssjuksköterska</option>
+            <option value="PSYKIATRI">Psykiatrisjuksköterska</option>
+            <option value="ONKOLOGI">Onkologisjuksköterska</option>
+            <option value="GERIATRIK">Geriatriksjuksköterska</option>
+            <option value="RÖNTGEN">Röntgensjuksköterska</option>
+            <option value="MOTTAGNING">Mottagningssjuksköterska</option>
+            <option value="SKOL">Skolsköterska</option>
+            <option value="INFEKTION">Infektionssjuksköterska</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">CV (PDF eller Word):</label>
+        <input type="file" name="cv_file" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Licens (valfritt):</label>
+        <input type="file" name="license_file" class="form-control">
+    </div>
+    <div class="mb-3" style="display:flex;align-items:center;">
+        <input type="checkbox" name="accepted_gdpr" style="margin-right:10px;">
+        <label class="form-label" style="margin:0;">Jag godkänner att Bidma AB hanterar mina personuppgifter.</label>
+    </div>
+    <p style="font-size:0.9rem;color:var(--light-text);">Genom att kryssa i rutan godkänner du att Bidma AB lagrar och behandlar dina personuppgifter.</p>
+    <button type="submit" class="btn mt-3" style="display:block;margin:0 auto;">Skicka</button>
+</form>
+{% endblock content %}

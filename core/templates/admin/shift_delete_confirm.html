@@ -1,0 +1,16 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="hero">
+  <h2 class="hero-title">Ta bort uppdrag</h2>
+  <p>Bekräfta att du vill ta bort detta uppdrag</p>
+</div>
+
+<div class="card">
+  <p>{{ shift.nurse.name }}: {{ shift.start_time|date:"Y-m-d H:i" }} - {{ shift.end_time|date:"H:i" }}</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Ja, ta bort</button>
+    <a href="/admin_calendar/" class="btn-secondary" style="padding:10px 15px;display:inline-block;margin-left:10px;">Avbryt</a>
+  </form>
+</div>
+{% endblock content %}

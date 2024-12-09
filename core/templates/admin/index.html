@@ -1,0 +1,13 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<h2>Välkommen till Bidma AB Admin</h2>
+<p>Här kan du hantera sjuksköterskor, söka bland registrerade kandidater, administrera systemet, köra kostnadskalkylator och se bokningar i kalendern.</p>
+
+<div class="card p-3 mt-4 shadow-sm">
+  <h3 class="mb-3" style="color:var(--accent);">Snabbval</h3>
+  <a href="/admin_search/" class="btn btn-primary"><i class="fas fa-search"></i> Sök (Admin)</a>
+  <a href="/admin_cost_calculator/" class="btn btn-secondary mt-2"><i class="fas fa-calculator"></i> Räkna kostnader</a>
+  <a href="/admin_calendar/" class="btn btn-info mt-2"><i class="fas fa-calendar"></i> Visa kalender</a>
+</div>
+
+{% endblock content %}

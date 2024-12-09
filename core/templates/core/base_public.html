@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidma AB | Publik</title>
+    <link rel="stylesheet" href="/static/core/custom.css">
+</head>
+<body>
+  <header class="header-bar">
+    <div>
+      <a href="/"><strong>Bidma AB</strong></a>
+    </div>
+    <nav>
+      <a href="/register/">Registrera</a>
+      <!-- Ingen admin- eller filterkod här -->
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h2 class="hero-title">Välkommen till Bidma AB</h2>
+    <p>Registrera dig för att komma igång</p>
+  </div>
+
+  <main class="container">
+    {% block content %}{% endblock content %}
+  </main>
+
+  <script src="/static/core/custom.js"></script>
+</body>
+</html>

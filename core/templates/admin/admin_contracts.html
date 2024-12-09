@@ -1,0 +1,41 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="hero">
+  <h2 class="hero-title">Avtal</h2>
+  <p>Hantera och filtrera befintliga avtal</p>
+</div>
+
+<form method="get" class="mb-4" style="display:flex; gap:20px; flex-wrap: wrap;align-items:flex-end;">
+  <div>
+    <label class="form-label">Kategori</label>
+    {{ form.category }}
+  </div>
+  <div>
+    <label class="form-label">Namn</label>
+    {{ form.name }}
+  </div>
+  <div>
+    <button type="submit" class="btn">Filtrera</button>
+  </div>
+  <div>
+    <a href="/admin_contracts_add/" class="btn-secondary">Lägg till avtal</a>
+  </div>
+</form>
+
+{% if contracts %}
+<div class="card-grid">
+  {% for c in contracts %}
+  <div class="card">
+    <h5 style="margin-top:0;">{{ c.name }}</h5>
+    <p style="color:var(--light-text);">{{ c.get_category_display }}<br>Uppladdad: {{ c.uploaded_at|date:"Y-m-d H:i" }}</p>
+    <a href="{{ c.file.url }}" target="_blank" class="btn mt-2">Öppna avtal</a>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <img src="/static/images/empty.svg" alt="Inga avtal">
+  <p>Inga avtal hittades för dessa filter.</p>
+</div>
+{% endif %}
+{% endblock content %}

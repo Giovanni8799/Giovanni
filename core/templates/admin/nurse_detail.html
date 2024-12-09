@@ -1,0 +1,21 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="hero">
+  <h2 class="hero-title">{{ nurse.name }}</h2>
+  <p>{{ nurse.specialization|default:"Ingen specialisering" }} | {{ nurse.city }}</p>
+</div>
+
+<div class="card">
+  <p>E-post: {{ nurse.email }}<br>Telefon: {{ nurse.phone|default:"Ej angivet" }}<br>Registrerad: {{ nurse.created_at|date:"Y-m-d H:i" }}</p>
+
+  {% if nurse.cv_file %}
+  <p><a href="{{ nurse.cv_file.url }}" target="_blank" class="btn-secondary">Visa CV</a></p>
+  {% endif %}
+  {% if nurse.license_file %}
+  <p><a href="{{ nurse.license_file.url }}" target="_blank" class="btn-secondary">Visa Licens</a></p>
+  {% endif %}
+
+  <a href="/admin_add_shift/?nurse_id={{ nurse.id }}" class="btn mt-3">Lägg till uppdrag</a>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Bidma AB Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'core/custom.css' %}">
+<style>
+/* TEST: Sätt bakgrund på hela admin-body för att se att det fungerar */
+body {
+    background-color: #232b2b !important; /* Charleston Gray */
+}
+</style>
+{% endblock extrastyle %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Bidma AB Admin</a></h1>
+{% endblock branding %}
